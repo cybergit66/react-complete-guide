@@ -75,10 +75,12 @@ class App extends Component {
             style.backgroundColor = 'red';
       }
       
+      let classes = ['red', 'bold'].join(' ');
+      
     return (
       <div className="App">
         <h1>My Customized React App</h1>
-        <p>Starting to come into Shape!</p>
+        <p className={classes}>Starting to come into Shape!</p>
         <button style={style} onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
         {persons}
         <p><input type="text" onChange={this.userinputChangeHandler}/></p>
