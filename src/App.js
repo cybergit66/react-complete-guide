@@ -55,7 +55,7 @@ class App extends Component {
           font: 'inherit',
           border: '1px solid blue',
           padding: '8px',
-          cursor: 'pointer' 
+          cursor: 'pointer'
       };
       
       let persons = null;
@@ -75,12 +75,18 @@ class App extends Component {
             style.backgroundColor = 'red';
       }
       
-      let classes = ['red', 'bold'].join(' ');
+      let classes = [];
+      if (this.state.persons.length <= 2) {
+          classes.push('red'); // classes = ['red'];
+      }
+      if (this.state.persons.length <= 1) {
+          classes.push('bold'); // classes = ['red', 'bold'];
+      }
       
     return (
       <div className="App">
         <h1>My Customized React App</h1>
-        <p className={classes}>Starting to come into Shape!</p>
+        <p className={classes.join(' ')}>Starting to come into Shape!</p>
         <button style={style} onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
         {persons}
         <p><input type="text" onChange={this.userinputChangeHandler}/></p>
