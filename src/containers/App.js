@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './App.css';
-import Person from './Person/Person';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 
 class App extends Component {
@@ -17,7 +18,6 @@ class App extends Component {
         this.setState({ userInput: event.target.value });
         let count = this.state.userInput.length;
         this.setState({ countLetters: count });
-        console.log(this.state.countLetters, this.state.userInput);
     }
 
     nameChangeHandler = (event, id) => {
@@ -50,38 +50,15 @@ class App extends Component {
   render() {
       
       let persons = null;
-      let btnClass = '';
       
       if (this.state.showPersons){
-          persons = (
-            <div>
-              {this.state.persons.map((person, index) => {
-                return <Person click={() => this.deletePersonHandler(index)} 
-                                changed={(event) => this.nameChangeHandler(event, person.id)} 
-                                name={person.name} 
-                                age={person.age} 
-                                key={person.id} />
-              })}
-            </div>
-          );
-         btnClass = classes.Red;
-      }
-      
-      let assignedClasses = [];
-      if (this.state.persons.length <= 2) {
-          assignedClasses.push(classes.red); // classes = ['red'];
-      }
-      if (this.state.persons.length <= 1) {
-          assignedClasses.push(classes.bold); // classes = ['red', 'bold'];
+          persons = <Persons persons={this.state.persons} clicked={this.deletePersonHandler} changed={this.nameChangeHandler}/>;
       }
       
     return (
       <div className={classes.App}>
-        <h1>My Customized React App</h1>
-        <p className={assignedClasses.join(' ')}>Starting to come into Shape!</p>
-        <button className={btnClass} onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+        <Cockpit showPersons={this.state.showPersons} persons={this.state.persons} clicked={this.togglePersonsHandler}/>
         {persons}
-        <p><input type="text" onChange={this.userinputChangeHandler}/></p>
         </div>
     );
   }
