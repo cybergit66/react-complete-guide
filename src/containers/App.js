@@ -5,14 +5,35 @@ import Cockpit from '../components/Cockpit/Cockpit';
 
 
 class App extends Component {
-    state = {
-        persons: [
-            { id: 'adad', name: 'Big T', age: 51 },
-            { id: '44ee', name: 'Liz', age: 51 },
-            { id: 'lloo', name: 'TommyBoy', age: 11 }
-        ],
-        showPersons: false
+    constructor(props) {
+        super(props);
+        console.log('[App.js] Inside Constructor', props);
+        
+         this.state = {
+            persons: [
+                { id: 'adad', name: 'Big T', age: 51 },
+                { id: '44ee', name: 'Liz', age: 51 },
+                { id: 'lloo', name: 'TommyBoy', age: 11 }
+            ],
+            showPersons: false
+            }
+        }
+    
+    componentWillMount(){
+        console.log('[App.js] Component will mount()');
     }
+    
+    componentDidMount(){
+        console.log('[App.js] Component Did mount()');
+    }
+//    state = {
+//        persons: [
+//            { id: 'adad', name: 'Big T', age: 51 },
+//            { id: '44ee', name: 'Liz', age: 51 },
+//            { id: 'lloo', name: 'TommyBoy', age: 11 }
+//        ],
+//        showPersons: false
+//    }
     
     userinputChangeHandler = (event) => { 
         this.setState({ userInput: event.target.value });
@@ -48,7 +69,7 @@ class App extends Component {
     }
 
   render() {
-      
+      console.log('[Inside render] App.js');
       let persons = null;
       
       if (this.state.showPersons){
