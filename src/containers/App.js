@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
 
 
 class App extends Component {
     constructor(props) {
         super(props);
-        console.log('[App.js] Inside Constructor', props);
         
          this.state = {
             persons: [
@@ -19,13 +19,13 @@ class App extends Component {
             }
         }
     
-    componentWillMount(){
-        console.log('[App.js] Component will mount()');
+
+    
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.persons !== this.state.persons || nextState.showPersons !== this.state.showPersons;
     }
     
-    componentDidMount(){
-        console.log('[App.js] Component Did mount()');
-    }
+    
 //    state = {
 //        persons: [
 //            { id: 'adad', name: 'Big T', age: 51 },
@@ -69,7 +69,6 @@ class App extends Component {
     }
 
   render() {
-      console.log('[Inside render] App.js');
       let persons = null;
       
       if (this.state.showPersons){
@@ -77,10 +76,10 @@ class App extends Component {
       }
       
     return (
-      <div className={classes.App}>
+      <WithClass classes={classes.App}>
         <Cockpit showPersons={this.state.showPersons} persons={this.state.persons} clicked={this.togglePersonsHandler}/>
         {persons}
-        </div>
+      </WithClass>
     );
   }
 }
