@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
-import WithClass from '../hoc/WithClass';
+import Aux from '../hoc/Auxil';
+import withClass from '../hoc/withClass';
 
 
 class App extends Component {
@@ -15,7 +16,8 @@ class App extends Component {
                 { id: '44ee', name: 'Liz', age: 51 },
                 { id: 'lloo', name: 'TommyBoy', age: 11 }
             ],
-            showPersons: false
+            showPersons: false,
+            toggleClicked: 0
             }
         }
     
@@ -58,14 +60,19 @@ class App extends Component {
     
     deletePersonHandler = (personIndex) => {
 //        const persons = this.state.persons.slice(); old approach
-        const persons = [...this.state.persons]; // ES6 approach
-        persons.splice(personIndex, 1);
-        this.setState({persons: persons});
+        const persons = [...this.state.persons]; // ES6 approach create copy of state in an array
+        persons.splice(personIndex, 1); // mutate the copy
+        this.setState({persons: persons}); // set the state to the copy
     }
     
     togglePersonsHandler = () => {
         const doesShow = this.state.showPersons;
-        this.setState({showPersons: !doesShow});
+        this.setState( (prevState, props) => { // ensure we get the latest version of state
+            return {
+                showPersons: !doesShow,
+                toggleClicked: prevState.toggleClicked + 1 
+            }
+        }   );
     }
 
   render() {
@@ -76,12 +83,12 @@ class App extends Component {
       }
       
     return (
-      <WithClass classes={classes.App}>
-        <Cockpit showPersons={this.state.showPersons} persons={this.state.persons} clicked={this.togglePersonsHandler}/>
-        {persons}
-      </WithClass>
+        <Aux>
+            <Cockpit showPersons={this.state.showPersons} persons={this.state.persons} clicked={this.togglePersonsHandler}/>
+            {persons}
+        </Aux>
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);
